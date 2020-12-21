@@ -1,7 +1,9 @@
 /* eslint-disable linebreak-style */
 // eslint-disable-next-line import/extensions
 import Sun from './src/sun.js';
+// eslint-disable-next-line import/extensions
 import Wave from './src/wave.js';
+
 let minDim;
 const waves = [];
 let sun;
@@ -19,7 +21,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   nWavePts = Math.floor(windowWidth / 30);
 
-minDim = min([windowWidth, windowHeight])
+  minDim = min([windowWidth, windowHeight]);
   let waveHeight;
   let wave;
   let c;
@@ -30,12 +32,11 @@ minDim = min([windowWidth, windowHeight])
 
     waves.push(wave);
   }
-sun = new Sun({minDim})
-
+  sun = new Sun({ minDim });
 }
 
 function draw() {
-  stroke(255)
+  stroke(255);
   background(200);
   sun.draw();
   waves.forEach((wave) => wave.draw());
