@@ -32,7 +32,7 @@ function setup() {
 
     waves.push(wave);
   }
-  sun = new Sun({ minDim });
+  sun = new Sun({ minDim, strokeW: 20 });
 }
 
 function draw() {
@@ -40,6 +40,11 @@ function draw() {
   background(200);
   sun.draw();
   waves.forEach((wave) => wave.draw());
+
+  // frame
+  stroke(255);
+  noFill();
+  rect(0, 0, width, height);
 }
 
 window.setup = setup;

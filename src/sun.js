@@ -1,14 +1,18 @@
 export default class Sun {
-  constructor({ minDim }) {
+  constructor({ minDim, strokeW = 20 }) {
     this.sunColor = color([255, 179, 15]); // honey yellow
     this.minDim = minDim;
     this.nHaloCount = 40;
     this.minRadius = minDim * 0.8;
     this.maxRadius = minDim * 5;
+
+    this.strokeWeight = strokeW;
   }
 
   draw() {
+    push();
     fill(this.sunColor);
+    strokeWeight(this.strokeWeight);
     ellipse(width / 2, height / 2, this.minDim * 0.8);
     noFill();
 
@@ -21,5 +25,6 @@ export default class Sun {
       stroke(haloColor);
       ellipse(width / 2, height / 2, haloRadius);
     }
+    pop();
   }
 }
