@@ -13,7 +13,6 @@ const minWaveHeight = 150;
 const maxWaveHeight = 350;
 let minSunWaveWidth;
 let maxSunWaveWidth;
-let nWavePts;
 
 const wavePalette = [
   [1, 41, 95], // royal blue
@@ -30,36 +29,34 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   minDim = min([windowWidth, windowHeight]);
 
-  nWavePts = Math.floor(windowWidth / 30);
-  maxSunWaveWidth = minDim * 0.8;
+  maxSunWaveWidth = minDim * 0.9;
   minSunWaveWidth = minDim * 0.6;
 
   let waveHeight;
+  let waveWidth;
   let wave;
-  let c;
+  let fillColor;
+  let zIndex;
   for (let i = 0; i < nWaves; i += 1) {
+    // first waves made are tallest and then decrease
     waveHeight = map(i, 0, nWaves, maxWaveHeight, minWaveHeight);
-    c = random(wavePalette);
+    fillColor = random(wavePalette);
+
     wave = new Wave({
-      waveHeight: height - waveHeight, fillColor: c, nWavePts, waveWidth: width, zIndex: i,
+      waveHeight, fillColor, waveWidth: width, zIndex: i,
     });
     waves.push(wave);
   }
 
-  for (let i = 1; i <= nSunWaves; i += 1) {
-    const zIndex = i + 0.5;
-    const waveWidth = map(zIndex, 0, nSunWaves, maxSunWaveWidth, minSunWaveWidth, true);
-
-    waveHeight = map(i, 0, nSunWaves, maxWaveHeight, minWaveHeight, true);
-    c = sunPalette[i % sunPalette.length];
+  for (let i = 1; i < nSunWaves; i += 1) {
+    // first waves made are tallest and then decrease
+    zIndex = i + 0.5;
+    waveHeight = map(zIndex, 0, nSunWaves, maxWaveHeight, minWaveHeight);
+    waveWidth = map(zIndex, 0, nSunWaves, maxSunWaveWidth, minSunWaveWidth);
+    fillColor = sunPalette[i % sunPalette.length];
 
     wave = new Wave({
-      waveHeight: height - waveHeight,
-      fillColor: c,
-      nWavePts,
-      waveWidth,
-      zIndex,
-      isSunWave: true,
+      waveHeight, fillColor, waveWidth, zIndex, isSunWave: true,
     });
     waves.push(wave);
   }
