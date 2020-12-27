@@ -29,6 +29,11 @@ const sunPalette = [
   [255, 179, 15], // honey yellow
 ];
 
+let boatImg;
+function preload() {
+  boatImg = loadImage('./assets/boat.png');
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   minDim = min([windowWidth, windowHeight]);
@@ -66,10 +71,14 @@ function setup() {
   }
 
   // zIndexRange is [0, nWaves]
-  zIndex = random(1, nWaves - 1);
-  const x = random(width / 2 - 20, width / 2 + 30);
+  // zIndex = random(1, nWaves - 1);
+  // const x = random(width * 0.3, width * 0.7);
+  zIndex = 2.9;
+  const x = width * 0.3;
   const y = height - map(zIndex, 0, nWaves, maxWaveHeight, minWaveHeight);
-  boat = new Boat({ x, y, zIndex });
+  boat = new Boat({
+    x, y, img: boatImg, zIndex,
+  });
   wavesAndBoat.push(boat);
 
   wavesAndBoat.sort((a, b) => a.zIndex - b.zIndex);
@@ -88,5 +97,6 @@ function draw() {
   rect(0, 0, width, height);
 }
 
+window.preload = preload;
 window.setup = setup;
 window.draw = draw;

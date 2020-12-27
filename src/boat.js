@@ -1,9 +1,11 @@
 export default class Boat {
   constructor({
-    x, y, img = null, zIndex = 0,
+    x, y, w = 100, h = 100, img = null, zIndex = 0,
   }) {
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
     this.img = img;
 
     this.zIndex = zIndex;
@@ -11,12 +13,14 @@ export default class Boat {
 
   draw() {
     push();
-    fill(255, 0, 0);
-    stroke(0, 255, 0);
-    strokeWeight(10);
+    const yAdj = 3 * sin(frameCount * 0.03);
 
-    const yAdj = 5 * sin(frameCount * 0.03);
-    ellipse(this.x, this.y + yAdj, 50);
+    if (this.img) {
+      imageMode(CENTER);
+      image(this.img, this.x, this.y + yAdj - this.h * 0.3, this.w, this.h);
+    } else {
+      ellipse(this.x, this.y + yAdj, 50);
+    }
     pop();
   }
 }
