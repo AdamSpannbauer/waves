@@ -1,12 +1,16 @@
+/* eslint-disable import/extensions */
 /* eslint-disable linebreak-style */
-// eslint-disable-next-line import/extensions
 import Sun from './src/sun.js';
-// eslint-disable-next-line import/extensions
 import Wave from './src/wave.js';
+import Boat from './src/boat.js';
 
 let minDim;
-const waves = [];
+
 let sun;
+let boat;
+
+const wavesAndBoat = [];
+
 const nWaves = 10;
 const nSunWaves = nWaves - 2;
 const minWaveHeight = 150;
@@ -45,7 +49,7 @@ function setup() {
     wave = new Wave({
       waveHeight, fillColor, waveWidth: width, zIndex: i,
     });
-    waves.push(wave);
+    wavesAndBoat.push(wave);
   }
 
   for (let i = 1; i < nSunWaves; i += 1) {
@@ -58,10 +62,17 @@ function setup() {
     wave = new Wave({
       waveHeight, fillColor, waveWidth, zIndex, isSunWave: true,
     });
-    waves.push(wave);
+    wavesAndBoat.push(wave);
   }
 
-  waves.sort((a, b) => a.zIndex - b.zIndex);
+  // zIndexRange is [0, nWaves]
+  zIndex = random(1, nWaves - 1);
+  const x = random(width / 2 - 20, width / 2 + 30);
+  const y = height - map(zIndex, 0, nWaves, maxWaveHeight, minWaveHeight);
+  boat = new Boat({ x, y, zIndex });
+  wavesAndBoat.push(boat);
+
+  wavesAndBoat.sort((a, b) => a.zIndex - b.zIndex);
   sun = new Sun({ minDim, strokeW: 0.2 });
 }
 
@@ -69,7 +80,7 @@ function draw() {
   stroke(255);
   background(13, 6, 56);
   sun.draw();
-  waves.forEach((wave) => wave.draw());
+  wavesAndBoat.forEach((wave) => wave.draw());
 
   // frame
   stroke(255);
